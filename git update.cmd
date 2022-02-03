@@ -4,6 +4,9 @@ git add ./.gitignore
 git add ./*
 git commit -m "update commit"
 git branch -M main
+
+git remote add origin https://github.com/EDGEDevInteractive/FVNi-Website.git
+
 git fetch origin
 git log origin/main
 git pull --rebase origin main
