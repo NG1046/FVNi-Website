@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <!-- UIkit CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/css/uikit.min.css" />
+
+        <!-- UIkit JS -->
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/js/uikit.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/js/uikit-icons.min.js"></script>
+
+        
+
+        <link rel="stylesheet" href="/essentials/admin/login.css" />
+        <title>Document</title>
+    </head>
+    <body>
+        <% if (errs != null) { %>
+            <sspuDATA style="display: none;" id="errs"><%= errs %> </sspuDATA>
+            <script>
+                UIkit.modal.alert([
+                    "<h3>Errors</h3>",
+                    (JSON.parse(document.getElementsByTagName("sspuDATA")["errs"].innerText).join(", \n"))
+                ].join("\n"))
+            </script>
+        <% } %>
+        <div class="containerx">
+
+            <form action="/services/admin/auth/login" enctype="multipart/form-data" method="post">
+                <div class="uk-margin">
+                    <label for="userName" class="form-label" title="Required">Username</label>
+                    <input class="uk-input" type="text" placeholder="Username" name="userName" id="userName" required>
+                </div>
+    
+                <div class="uk-margin">
+                    <label for="passWord" class="form-label" title="Required">Password</label>
+                    <input class="uk-input" type="password" placeholder="Password" name="passWord" id="passWord" required>
+                </div>
+                
+                <button type="submit" class="uk-button uk-button-primary" id="subMitt" name="subMitt" value="TRUE">Submit</button>
+            </form>
+
+        </div>
+    </body>
+</html>

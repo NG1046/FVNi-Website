@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="/essentials/admin/css.css"/>
+        <link rel="stylesheet" href="/essentials/admin/input.css"/>
+        <script src="/essentials/admin/nav.js"></script>
+        <script src="https://unpkg.com/@popperjs/core@2"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <!-- UIkit CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/css/uikit.min.css" />
+
+        <!-- UIkit JS -->
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/js/uikit.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/js/uikit-icons.min.js"></script>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+
+
+
+        <title>Edit Record</title>
+    </head>
+    <body class="bodyflex">
+        <% if (errs != null) { %>
+            <sspuDATA style="display: none;" id="errs"><%= errs %> </sspuDATA>
+            <script>
+                UIkit.modal.alert([
+                    "<h3>Errors</h3>",
+                    (JSON.parse(document.getElementsByTagName("sspuDATA")["errs"].innerText).join(", \n"))
+                ].join("\n"))
+            </script>
+        <% } %>
+
+
+
+        <div class="NavigatorHam">
+            <div style="height:4px; width: 100%;"></div>
+
+
+
+            <%- Naver %> 
+
+
+
+        </div>
+
+        <div class="bodie">
+
+            <div class="marg-10">
+                <h3>Edit Record</h3>
+                <form action="/services/admin/music/edit" method="post" enctype="multipart/form-data">
+                    <div class="uk-margin">
+                        <label for="audioName" class="form-label" title="Required">Audio Name [<mkr class="red">*</mkr>]</label>
+                        <input class="uk-input" type="text" placeholder="Audio Name" name="audioName" id="audioName" value="<%= musicInfoh[0].audioName %>" required>
+                    </div>
+                    
+                    <div class="uk-margin">
+                        <label for="gameName" class="form-label" title="Required">Game Name [<mkr class="red">*</mkr>]</label>
+                        <select class="uk-select" name="gameName" id="gameName" required>
+                            
+                            <% for( var x = 0; x < indexesData.length; x++ ) { %>
+                                <% if (indexesData[x]["gameName"] == musicInfoh[0].gameName) { %>
+                                    <option value="<%= indexesData[x]["gameName"] %>" selected><%= indexesData[x]["gameName"] %></option>
+                                <% } else { %>
+                                    <option value="<%= indexesData[x]["gameName"] %>"><%= indexesData[x]["gameName"] %></option>
+                                <% } %> 
+                            <% } %>
+
+                        </select>
+                    </div>
+                        
+                    <div class="uk-margin">
+                        <label for="imageFile" class="form-label">Custom Image File</label>
+                        <input class="uk-input" type="file" placeholder="Custom Image File" name="imageFile" accept=".png,.jpg,.jpeg,.webp">
+                    </div>
+                    
+                    <div class="uk-margin">
+                        <textarea name="descripte" placeholder="Description [Markdown Syntax Only!]" style="resize: vertical;" class="uk-input"value="<%= musicInfoh[0]["description"] %>"><%= musicInfoh[0]["description"] %></textarea>
+                    </div>
+
+                    <input type="text" style="display: none;" value="<%= usrID %>" name="UploaderId">
+                    <input type="text" style="display: none;" value="<%= musicInfoh[0].id %>" name="AudioId">
+                    <input type="submit" class="uk-button uk-button-primary">
+                </form>
+            </div>
+
+        </div>
+    </body>
+</html>

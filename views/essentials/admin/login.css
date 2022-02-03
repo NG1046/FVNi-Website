@@ -1,0 +1,21 @@
+body{
+    display: flex;
+    height: -webkit-fill-available;
+    height: 100vh;
+    max-height: 100vh;
+    /* overflow-x: auto; */
+    overflow-y: hidden;
+    margin: 0px!important;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerx{
+    box-shadow: gray 0 0 10px 0;
+    padding: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}

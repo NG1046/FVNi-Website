@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="/essentials/admin/css.css"/>
+        <script src="/essentials/admin/nav.js"></script>
+        <script src="https://unpkg.com/@popperjs/core@2"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <!-- UIkit CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/css/uikit.min.css" />
+
+        <!-- UIkit JS -->
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/js/uikit.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/js/uikit-icons.min.js"></script>
+
+
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@4.16.0/css/xterm.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/xterm@4.16.0/lib/xterm.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.5.0/lib/xterm-addon-fit.min.js"></script>
+
+        
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+
+        <title>Chat</title>
+    </head>
+    <body class="bodyflex">
+        <div class="NavigatorHam">
+            <div style="height:4px; width: 100%;"></div>
+
+
+
+            <%- Naver %> 
+
+
+
+        </div>
+
+        <div class="bodie">
+            
+            <div class="marg-10" style="height: -webkit-fill-available;width: -webkit-fill-available;">
+                <div class="Buttoneste">
+                    <button class="uk-button uk-button-primary" id="refreshy" onclick="location.reload()" disabled>Refresh</button>
+                </div>
+
+                <svsd name="wsurl" url="ws://<%= servurl+":"+wsport+"/services/admin/ws/gChat" %>"></svsd>
+                <svsd name="uname"><%= uname %></svsd>
+                <svsd name="usrId"><%= uid %></svsd>
+                <div class="before-terminal terminal-flexy" style="margin-top: 10px;">
+                    <div id="term" style="height: -webkit-fill-available;"></div>
+                    <div style="margin-top: 10px;">
+                        <input type="text" id="termy command input" class="termyInput"disabled/>
+                    </div>
+                </div>
+
+                <script>
+                    var baseTheme = {
+                        foreground: '#F8F8F8',
+                        background: '#2D2E2C',
+                        selection: '#5DA5D533',
+                        black: '#1E1E1D',
+                        brightBlack: '#262625',
+                        red: '#CE5C5C',
+                        brightRed: '#FF7272',
+                        green: '#5BCC5B',
+                        brightGreen: '#72FF72',
+                        yellow: '#CCCC5B',
+                        brightYellow: '#FFFF72',
+                        blue: '#5D5DD3',
+                        brightBlue: '#7279FF',
+                        magenta: '#BC5ED1',
+                        brightMagenta: '#E572FF',
+                        cyan: '#5DA5D5',
+                        brightCyan: '#72F0FF',
+                        white: '#F8F8F8',
+                        brightWhite: '#FFFFFF'
+                    };
+
+                    var term = new Terminal({
+                        disableStdin: true,
+                        theme: baseTheme,
+                    });
+                                        
+                    var fitAddon = new FitAddon.FitAddon();
+                    term.loadAddon(fitAddon);
+                    term.open(document.getElementById("term"));
+                    setInterval(() => {
+                        fitAddon.fit();
+                    }, 1);
+                    
+                    var wsconnector = new WebSocket(document.getElementsByTagName("svsd").namedItem("wsurl").getAttribute("url"));
+                    wsconnector.addEventListener("open", (ev) => {
+                        console.log("Connection Opened.");
+                    });
+                    wsconnector.addEventListener("message", (ev) => {
+                        console.log(ev.data);
+                        if(ev.data.startsWith("???TERM Write")){
+                            var datos = ev.data.replace("???TERM Write ", "");
+                            
+                            setTimeout(() => {
+                                
+                                document.getElementById("termy command input").disabled = false;
+                                term.clear();
+                                term.write(datos)
+                                return;
+                            }, 5000);
+                            return;
+                        }
+                        term.write(ev.data);
+                    });
+                    wsconnector.addEventListener("close", (ev) => {
+                        term.write("\u001b[31mConnection Closed. Reason:"+ev.reason+" Code:"+ev.code+"\u001b[0m\n\r");
+                        inputer.disabled = true;
+                        document.getElementById("refreshy").disabled = false;
+                    });
+
+                    var inputer = document.getElementById("termy command input");
+                    inputer.addEventListener("keydown", (ev) => {
+                        if(!ev.repeat){
+                            if(ev.key === "Enter"){
+                                if(inputer.value.replaceAll(" ", "") == ""){
+                                    console.log("No Data To Send");
+                                    return;
+                                }
+                                var datas = {
+                                    messagesData: String(inputer.value),
+                                    usrName: document.getElementsByTagName("svsd").namedItem("uname").innerHTML,
+                                    usrId: document.getElementsByTagName("svsd").namedItem("usrId").innerHTML,
+                                }
+                                wsconnector.send(JSON.stringify(datas));
+                                inputer.value = "";
+                            }
+                        }
+                    });
+                </script>
+            </div>
+
+        </div>
+    </body>
+</html>

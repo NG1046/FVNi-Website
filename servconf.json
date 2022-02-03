@@ -1,0 +1,5 @@
+{
+    "servURL": "localhost", 
+    "wsPortTerminal": 3897,
+    "wsPortGChat": 3842
+}

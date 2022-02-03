@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Matomo -->
+        <script>
+            var _paq = window._paq = window._paq || [];
+            /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+            _paq.push(['trackPageView']);
+            _paq.push(['enableLinkTracking']);
+            (function() {
+            var u="//edgedevinteractive.com/analytics/";
+            _paq.push(['setTrackerUrl', u+'matomo.php']);
+            _paq.push(['setSiteId', '2']);
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+            })();
+        </script>
+        <!-- End Matomo Code -->  
+
+
+        <!--
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+        -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
+
+
+        
+        <!-- UIkit CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.7.6/dist/css/uikit.min.css" />
+
+        <!-- UIkit JS -->
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.6/dist/js/uikit.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.6/dist/js/uikit-icons.min.js"></script>
+
+        <link rel="stylesheet" href="/essentials/main.css">
+        <link rel="stylesheet" href="/essentials/music/main.css">
+
+        <title></title>
+    </head>
+    <body class="wfa">
+
+        <div class="Loader" id="LoaderMAIN">
+            <script src="/essentials/loader.js"></script>
+            <img src="/essentials/assets/loading.gif">
+            <p class="LoaderTXTPara" id="Loading Text" style="margin-top: 0px;">Loading Contents</p>
+
+            <script>Loader.load()</script>
+        </div>
+
+
+        
+        <div class="hab-container">
+            <a href="/usr/settings/lrl/<%= lessResourceLoad %>" class="hab-item" title="Less Resource Load Toggle">LRL</a>
+        </div>
+        
+        <div class="cardContainer">
+            <% recordArrays.forEach((record) => { %>
+                
+                <div class="card cardMargin" style="width: 18rem;">
+                    <% if (lessResourceLoad == false) { %>
+                        <img src="/services/images/embed/<%= record.id %>" class="card-img-top" alt="">
+                    <% } %>
+                    <div class="card-body">
+                        <h5 class="card-title"><%= record.audioName %></h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><%= record.gameName %></h6>
+                        <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
+                    </div>
+                
+                    <div class="card-footer" style="display: flex;">
+                        <div style="margin-left: auto!important;">
+                            <a href="/music/<%= record.id %>" class="btn btn-primary" style="text-decoration: none;"><i class="bi bi-play-fill"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            <% }); %>
+        </div>
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <!-- UIkit CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/css/uikit.min.css" />
+
+        <!-- UIkit JS -->
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/js/uikit.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/js/uikit-icons.min.js"></script>
+
+        
+
+        <link rel="stylesheet" href="/essentials/admin/login.css" />
+        <title>Document</title>
+    </head>
+    <body>
+        <% if (errs != null) { %>
+            <sspuDATA style="display: none;" id="errs"><%= errs %> </sspuDATA>
+            <script>
+                UIkit.modal.alert([
+                    "<h3>Errors</h3>",
+                    (JSON.parse(document.getElementsByTagName("sspuDATA")["errs"].innerText).join(", \n"))
+                ].join("\n"))
+            </script>
+        <% } %>
+        <div class="containerx">
+            <script>var pkc = () => {var K1 = document.getElementById("passWord").value;var K2 = document.getElementById("repassWord").value;var PNMText = document.getElementById("PNMText");var subMitt = document.getElementById("subMitt");if (K1.length < 8) {PNMText.innerText = "Password Must Not Less Than 8 Characters Long.";PNMText.style.display = "block";subMitt.disabled = true;return;}if (K1 != K2) {PNMText.innerText = "Password Not Match";PNMText.style.display = "block";subMitt.disabled = true;return;}subMitt.disabled = false;PNMText.style.display = "none"};</script>
+            <form action="/services/admin/auth/regis" method="post" enctype="multipart/form-data">
+
+                <div class="uk-margin">
+                    <label for="eMail" class="form-label" title="Required">Email</label>
+                    <input class="uk-input" type="email" placeholder="Email" name="eMail" id="eMail" required>
+                </div>
+                <div class="uk-margin">
+                    <label for="userName" class="form-label" title="Required">Username</label>
+                    <input class="uk-input" type="text" placeholder="Username" name="userName" id="userName" required>
+                </div>
+    
+                <div class="uk-margin">
+                    <label for="passWord" class="form-label" title="Required">Password</label>
+                    <input class="uk-input" type="password" placeholder="Password" name="passWord" id="passWord" onkeyup="pkc()" required>
+                </div>
+                <div class="uk-margin">
+                    <label for="repassWord" class="form-label" title="Required">Re-Password</label>
+                    <input class="uk-input" type="password" placeholder="Re-Password" name="repassWord" id="repassWord" onkeyup="pkc()" required>
+                </div>
+                <div class="uk-margin">
+                    <label for="dateOfBirth" class="form-label" title="Required">Date Of Birth</label>
+                    <input class="uk-input" type="date" placeholder="Date Of Birth" name="dateOfBirth" id="dateOfBirth" min="2001-01-01" max="<%= ((new Date()).getFullYear() - 13) %>-01-01" value="2001-01-01" required>
+                </div>
+                <p style="display: none; color: red;" id="PNMText">Password Not Match!</p>
+                
+                <button type="submit" class="uk-button uk-button-primary" id="subMitt" name="subMitt" value="TRUE" disabled>Submit</button>
+            </form>
+
+        </div>
+    </body>
+</html>

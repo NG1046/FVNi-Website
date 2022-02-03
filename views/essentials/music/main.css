@@ -1,0 +1,14 @@
+.cardContainer{
+    width: 100%;
+    height: -webkit-fill-available;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.cardMargin{
+    margin: 5px;
+}
+.cardButtonTextDecs{
+    text-decoration: none;
+}
