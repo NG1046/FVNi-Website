@@ -1,5 +1,5 @@
 @echo off
-title FVNi-Website
+title FVNi-Website Git Initialize Repository
 git init
 git add ./.gitignore
 git add ./*
