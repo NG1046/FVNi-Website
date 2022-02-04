@@ -3,13 +3,13 @@ title FVNi-Website - Git Update Repository
 git add ./.gitignore
 git add ./*
 git commit -m "update commit"
-git branch -M main
+git branch -M pre
 
 git remote add origin https://github.com/EDGEDevInteractive/FVNi-Website.git
 
 git fetch origin
-git log origin/main
-git pull --rebase origin main
-git push -u origin main
+git log origin/pre
+git pull --rebase origin pre
+git push -u origin pre
 git fetch origin
 pause
